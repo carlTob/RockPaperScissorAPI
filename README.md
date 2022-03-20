@@ -1,8 +1,9 @@
 # RockPaperScissorAPI
 
 # Run the server
+Clone this repo.
 
-Locate the main folder and run the following command below:
+Enter the main folder and run the following command below:
 
 ./mvnw spring-boot:run
 
