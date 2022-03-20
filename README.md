@@ -41,6 +41,7 @@ With request body:
 # Get game
 This request the game status with game id= uuid. If both players have made their move, the results and respective player move will be presented in a status message. If one of the players hasnt made their move, all moves made will be hidden.
 
+
 GET: http://localhost:8080/games?name=gameUUID
 With Parameter: name : gameuuid
 To get Status of game with gameUUID
@@ -49,7 +50,11 @@ To get Status of game with gameUUID
 Make a move in game with game id: uuid. The move is sent with a corresponding player in the request body.
 Move can be either: PAPER, ROCK or SCISSORS.
 POST: http://localhost:8080/games/gameUUID/move
+
+
 With request body:
+
+
 {
 "move":"PAPER",
 "player":{
@@ -61,8 +66,11 @@ With request body:
 
 To join a game with game id: uuid. Request body should contain name of player.
 POST: http://localhost:8080/games/gameUUID/join
- <br />
+
+
 With request body:
+
+
 {
     "name": "Second player name"
 }
