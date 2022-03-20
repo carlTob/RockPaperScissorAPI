@@ -61,6 +61,7 @@ With request body:
 
 To join a game with game id: uuid. Request body should contain name of player.
 POST: http://localhost:8080/games/gameUUID/join
+ <br />
 With request body:
 {
     "name": "Second player name"
