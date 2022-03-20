@@ -24,10 +24,9 @@ public class Game {
         players.put(firstPlayer.getName(), firstPlayer);
     }
 
+    // Method called when player wants to make a move. Multiple error cases checked
+    // and appropriate status messages are returned.
     public StatusMessage makeMove(Player player, RPS move) {
-
-        
-        
         if (this.players.size() == 2) {
             if (this.players.containsKey(player.getName())) {
                 Player realPlayer = this.players.get(player.getName());
@@ -41,40 +40,32 @@ public class Game {
                         this.winner = this.findWinner();
                     }
                     return new StatusMessage("Player: " + player.getName() + ", made move: " + move, true);
-
                 }
-
             } else {
                 return new StatusMessage("Player with name: " + player.getName() + " cannot be found within the game.",
                         false);
-
             }
-
         } else {
-            return new StatusMessage("Please wait until the game has two players. Currently only: " + players.keySet().toArray()[0]
-                    + ", registered in the game.", false);
+            return new StatusMessage(
+                    "Please wait until the game has two players. Currently only: " + players.keySet().toArray()[0]
+                            + ", registered in the game.",
+                    false);
         }
-
-        // return new StatusMessage("Player: "+ this.name + ", made move: "
-        // +this.move.getMove(),true);
-        // }
-        // return new StatusMessage("Player: "+ this.name + ", could not make move: "
-        // +this.move.getMove(),false);
-        // return players.get(name).makeMove(move);
     }
 
     public UUID getGameId() {
         return gameId;
     }
-
+    //Build a string that represents the game. If only one or none of the players has made a move they are hidden.
+    //If both players did their move, the results and moves will be displayes in a string.
     public String getContentString(UUID uuid) {
         StringBuilder sb = new StringBuilder("");
         sb.append("_________ GAME STATS _________");
         sb.append(System.getProperty("line.separator"));
-
         if (this.gameFinished) {
             for (Entry<String, Player> entry : this.players.entrySet())
                 sb.append("NAME: " + entry.getKey() + " MOVE: " + this.getPlayerMove(entry.getValue()));
+                sb.append(System.getProperty("line.separator"));
             sb.append(System.getProperty("line.separator"));
             sb.append("WINNER: " + this.winner);
             sb.append(System.getProperty("line.separator"));
@@ -85,6 +76,7 @@ public class Game {
             sb.append(System.getProperty("line.separator"));
             for (Entry<String, Player> entry : this.players.entrySet())
                 sb.append("NAME: " + entry.getKey() + " MOVE: " + "Hidden");
+                sb.append(System.getProperty("line.separator"));    
             sb.append(System.getProperty("line.separator"));
         }
         return sb.toString();
@@ -98,9 +90,7 @@ public class Game {
     }
 
     public StatusMessage addPlayer(Player secondPlayer) {
-
         if (this.players.size() != 2) {
-
             if (this.players.containsKey(secondPlayer.getName())) {
                 return new StatusMessage("A0 players already exists in game with name: " + secondPlayer.getName(),
                         false);
@@ -118,7 +108,7 @@ public class Game {
         Player p1 = (Player) moves.keySet().toArray()[0];
         RPS m1 = moves.get(p1);
         Player p2 = (Player) moves.keySet().toArray()[1];
-        RPS m2 = moves.get(p1);
+        RPS m2 = moves.get(p2);
         switch (m1) {
             case PAPER:
                 switch (m2) {

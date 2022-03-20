@@ -3,6 +3,9 @@ package com.RockPaperScissor.RPSAPI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import com.RockPaperScissor.RPSAPI.Game.RPS;
+
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,9 +36,18 @@ public class Controller {
     return new StatusMessage("Cannot fint game with uuid: " + uuid.toString(), false);
     }
     public StatusMessage makeMove(UUID uuid,Player player, Move move){
+        String tempMove = move.getMove().toString().toUpperCase();
+        RPS rpsMove = RPS.valueOf(tempMove);
+
         if(ongoingGames.containsKey(uuid)){
             Game g = ongoingGames.get(uuid);
-            return g.makeMove(player, move.getMove());
+            
+            if( tempMove.equalsIgnoreCase(RPS.PAPER.toString()) ||tempMove.equalsIgnoreCase(RPS.ROCK.toString())||tempMove.equalsIgnoreCase(RPS.SCISSORS.toString())){
+                return g.makeMove(player,rpsMove);
+            }
+            else{
+                return new StatusMessage("Invalid move requested, move: "+ move.getMove()+ ", please pick between rock, paper and scissors." ,false);
+            }
         }
         return new StatusMessage("Game with id: "+ uuid+ ", could not be found. Please verify that it exists." ,false);
     }
@@ -44,7 +56,6 @@ public class Controller {
             return ongoingGames.get(uuid).getContentString(uuid);
         }
         return "Game with the following uuid could not be found: " + uuid.toString();
-
     }
 
 
@@ -63,10 +74,7 @@ public class Controller {
 		return this.makeMove(uuid,move.getPlayer(), move).toString();
 	}
 	@GetMapping("/games")
-	public String greeting(@RequestParam(value = "name", defaultValue = "World") UUID uuid) {
+	public String greeting(@RequestParam(value = "uuid", defaultValue = "") UUID uuid) {
 		return this.getGameContent(uuid);
 	}
-
-
-
 }

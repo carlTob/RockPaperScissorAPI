@@ -3,7 +3,7 @@ package com.RockPaperScissor.RPSAPI;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class Player {
-    
+    //Class representing a Player, not neccesary but helps create a more understandable code.
 
     private String name;
 
